@@ -1,0 +1,12 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+    <cron>
+        <url>/rest/cron/dailyreport</url>
+        <description>Queue the daily report generation</description>
+        <schedule>every 2 minutes</schedule>
+        <!-- schedule>every day 00:00</schedule -->
+    </cron>
+</cronentries>

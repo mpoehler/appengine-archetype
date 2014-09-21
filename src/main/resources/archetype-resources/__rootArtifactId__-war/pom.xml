@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+    <version>${version}</version>
+    <artifactId>${artifactId}</artifactId>
+
+    <parent>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}</artifactId>
+        <version>${version}</version>
+    </parent>
+
+    <dependencies>
+        <!-- Compile/runtime dependencies -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${appengine.target.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.databind-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+            <version>${objectify.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-aspects</artifactId>
+            <version>${spring.security.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${sl4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-testing</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- this configures the war plugin to use the resources directly without the artifacts generated by grunt -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration>
+                            <archiveClasses>true</archiveClasses>
+                            <webResources>
+                                <!-- in order to interpolate version from pom into appengine-web.xml -->
+                                <resource>
+                                    <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                                    <filtering>true</filtering>
+                                    <targetPath>WEB-INF</targetPath>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+
+                    <!-- this will call npm, bower and grunt:dev -->
+                    <plugin>
+                        <groupId>pl.allegro</groupId>
+                        <artifactId>grunt-maven-plugin</artifactId>
+                        <version>1.4.1</version>
+                        <configuration>
+                            <target>dev</target>
+                            <jsSourceDirectory>../grunt</jsSourceDirectory>
+                            <gruntOptions>
+                                <gruntOption>--verbose</gruntOption>
+                            </gruntOptions>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>create-resources</goal>
+                                    <goal>npm</goal>
+                                    <!-- or npm-offline if npm failure is not an option -->
+                                    <goal>bower</goal>
+                                    <goal>grunt</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>production</id>
+            <build>
+                <plugins>
+                    <!-- this configures the war plugin to use the optimized resources from the grunt target folder and
+                     skip the css/jsp/js files from the source folders -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration>
+                            <!-- and we don't want the raw css, js or jsp files -->
+                            <warSourceExcludes>css/*,js/*,**/*.jsp</warSourceExcludes>
+                            <archiveClasses>true</archiveClasses>
+                            <webResources>
+                                <!-- in order to interpolate version from pom into appengine-web.xml -->
+                                <resource>
+                                    <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                                    <filtering>true</filtering>
+                                    <targetPath>WEB-INF</targetPath>
+                                </resource>
+                                <!-- copy result from grunt file to the war -->
+                                <resource>
+                                    <directory>${basedir}/target-grunt/dist</directory>
+                                    <includes>
+                                        <include>**/*.jsp</include>
+                                        <include>css/*.app.css</include>
+                                        <include>js/*.app.js</include>
+                                    </includes>
+                                </resource>
+                            </webResources>
+                        </configuration>
+                    </plugin>
+
+                    <!-- this will call npm, bower and grunt:production -->
+                    <plugin>
+                        <groupId>pl.allegro</groupId>
+                        <artifactId>grunt-maven-plugin</artifactId>
+                        <version>1.4.1</version>
+                        <configuration>
+                            <target>production</target>
+                            <jsSourceDirectory>../grunt</jsSourceDirectory>
+                            <gruntOptions>
+                                <gruntOption>--verbose</gruntOption>
+                            </gruntOptions>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>create-resources</goal>
+                                    <goal>npm</goal>
+                                    <!-- or npm-offline if npm failure is not an option -->
+                                    <goal>bower</goal>
+                                    <goal>grunt</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <build>
+        <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
+
+        <plugins>
+            <!-- This configures the compiler to use Java 7 - this is required by appengine -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.0</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- this will also clean the target-grunt directory -->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>target</directory>
+                            <directory>target-grunt</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <!-- this configures the appengine:devserver to start before integration-test phase and stops
+            after integration-test phase -->
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine.target.version}</version>
+                <executions>
+                    <execution>
+                        <id>server-start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <!-- stop running instance first -->
+                            <goal>devserver_stop</goal>
+                            <goal>devserver_start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>server-stop</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>devserver_stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- This configures the normal unit test to run everything except the one in the integrationtest folder -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12</version>
+                <configuration>
+                    <!-- skip integrationtests during the normal unit tests -->
+                    <excludes>
+                        <exclude>**/integrationtest/*Test.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <!-- configures that everything in the integrationtest folder is run during integration test phase and NOT
+            stop the build if something goes wrong, because the devserver needs to shutdown anyway. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includes>
+                        <include>**/integrationtest/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

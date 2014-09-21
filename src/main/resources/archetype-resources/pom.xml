@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
+  <packaging>pom</packaging>
+
+  <!-- properties will be propagated to all modules -->
+  <properties>
+    <appengine.app.version>1</appengine.app.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <appengine.target.version>1.9.11</appengine.target.version>
+    <java.version>1.7</java.version>
+    <servlet-api.version>2.5</servlet-api.version>
+    <jstl.version>1.2</jstl.version>
+    <spring.version>4.0.6.RELEASE</spring.version>
+    <objectify.version>5.0.3</objectify.version>
+    <jackson.databind-version>2.4.2</jackson.databind-version>
+    <json.version>20140107</json.version>
+    <spring.security.version>3.2.5.RELEASE</spring.security.version>
+    <sl4j.version>1.7.5</sl4j.version>
+    <aspectj.version>1.6.10</aspectj.version>
+    <junit.version>4.11</junit.version>
+    <selenium.version>2.43.1</selenium.version>
+  </properties>
+
+  <build>
+      <pluginManagement>
+          <plugins>
+              <plugin>
+                  <groupId>com.google.appengine</groupId>
+                  <artifactId>appengine-maven-plugin</artifactId>
+                  <version>${appengine.target.version}</version>
+              </plugin>
+          </plugins>
+      </pluginManagement>
+  </build>
+</project>

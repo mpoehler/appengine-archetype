@@ -1,0 +1,29 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="ofyService" class="${package}.service.OfyService" init-method="init">
+        <property name="classes">
+            <set>
+                <!-- all entity classes must be registered here -->
+                <value>${package}.entity.Person</value>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="personService" class="${package}.service.PersonService">
+        <property name="ofyService" ref="ofyService"/>
+    </bean>
+
+    <bean id="cronService" class="${package}.service.CronService">
+        <property name="ofyService" ref="ofyService"/>
+    </bean>
+
+</beans>

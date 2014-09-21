@@ -1,0 +1,59 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.2.xsd
+    ">
+
+    <bean id="ofyService" class="${package}.service.OfyService" init-method="init">
+        <property name="classes">
+            <set>
+                   <!-- all entity classes must be registered here -->
+                <value>${package}.entity.Person</value>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="personService" class="${package}.service.PersonService">
+        <property name="ofyService" ref="ofyService"/>
+    </bean>
+
+    <bean id="cronService" class="${package}.service.CronService">
+        <property name="ofyService" ref="ofyService"/>
+    </bean>
+
+    <bean id="gaeEntryPoint" class="${package}.security.GoogleAccountsAuthenticationEntryPoint" />
+
+    <bean id="gaeFilter" class="${package}.security.GaeAuthenticationFilter">
+        <property name="authenticationManager" ref="authenticationManager"/>
+    </bean>
+
+    <bean id="gaeAuthenticationProvider" class="${package}.security.GoogleAccountsAuthenticationProvider">
+    </bean>
+
+    <sec:http use-expressions="true" entry-point-ref="gaeEntryPoint">
+        <!-- this is the URL based security (for method security, check the annotations in the service layer) -->
+        <sec:intercept-url pattern="/user/**" access="hasRole('ROLE_USER')" />
+        <sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <sec:custom-filter position="PRE_AUTH_FILTER" ref="gaeFilter" />
+
+        <!-- secure rest calls for the cron service by only allow this IP-Address -->
+        <!-- comment the following line to test calls to cron service within the local devserver -->
+        <sec:intercept-url pattern="/rest/cron/*" access="hasIpAddress('0.1.0.1/32')" />
+    </sec:http>
+
+    <sec:global-method-security secured-annotations="enabled"/>
+
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider ref="gaeAuthenticationProvider"/>
+    </sec:authentication-manager>
+
+</beans>

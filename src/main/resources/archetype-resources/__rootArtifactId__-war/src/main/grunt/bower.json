@@ -1,0 +1,13 @@
+{
+    "name": "${rootArtifactId}",
+    "description": "basic angular/bootstrap configuration",
+    "version": "1.0.0",
+    "dependencies": {
+        "angular": "~1.2.x",
+        "angular-route": "~1.2.x",
+        "jquery": "~1.11.1",
+        "bootstrap": "~3.2.0",
+        "html5shiv": "~3.7.2",
+        "respond": "~1.4.2"
+    }
+}
