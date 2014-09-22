@@ -19,7 +19,7 @@ USAGE
 - clone this project: ` git clone git@github.com:mpoehler/appengine-archetype.git `
 - go into that project: ` cd appengine-archetype `
 - build and install the archetype: ` mvn clean install `
-- steo one directory up: ` cd -- `
+- steo one directory up: ` cd .. `
 - create a new project based on the archetype (replace <my.groupid> and <my-artifactId> with values of your own): ` mvn archetype:generate -DarchetypeGroupId=eu.tuxoo -DarchetypeArtifactId=appengine-archetype -DarchetypeVersion=1.0 -DinteractiveMode=false -Dversion=1.0-SNAPSHOT -DgroupId=<my.groupid> -DartifactId=<my-artifactId>`
 - go into the newly created project: ` cd <my-artifactId> `
 - build the new project (see requirements below in case of errors): ` mvn clean install ` 
