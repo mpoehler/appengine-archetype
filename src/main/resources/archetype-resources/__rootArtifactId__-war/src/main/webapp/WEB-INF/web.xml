@@ -36,6 +36,17 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
+    <!-- OAuth callback servlet -->
+    <servlet>
+        <servlet-name>oauth2Callback</servlet-name>
+        <servlet-class>${package}.security.OAuth2CallbackServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>oauth2Callback</servlet-name>
+        <url-pattern>/oauth2callback/*</url-pattern>
+    </servlet-mapping>
+
     <!-- security filter -->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>

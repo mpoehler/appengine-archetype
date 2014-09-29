@@ -13,6 +13,13 @@
     http://www.springframework.org/schema/security/spring-security-3.2.xsd
     ">
 
+    <!-- load properties, with automatic environment prefix -->
+    <bean class="${package}.utils.DevserverAwarePropertyPlaceholderConfigurer" lazy-init="false">
+        <property name="locations">
+            <value>/WEB-INF/config.properties</value>
+        </property>
+    </bean>
+
     <bean id="ofyService" class="${package}.service.OfyService" init-method="init">
         <property name="classes">
             <set>

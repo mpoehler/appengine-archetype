@@ -11,7 +11,7 @@
     <appengine.app.version>1</appengine.app.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <appengine.target.version>1.9.11</appengine.target.version>
+    <appengine.target.version>1.9.12</appengine.target.version>
     <java.version>1.7</java.version>
     <servlet-api.version>2.5</servlet-api.version>
     <jstl.version>1.2</jstl.version>
@@ -24,6 +24,9 @@
     <aspectj.version>1.6.10</aspectj.version>
     <junit.version>4.11</junit.version>
     <selenium.version>2.43.1</selenium.version>
+    <google-api-client.version>1.19.0</google-api-client.version>
+    <commons-configuration.version>1.10</commons-configuration.version>
+    <adwords-ads.version>1.27.0</adwords-ads.version>
   </properties>
 
   <build>

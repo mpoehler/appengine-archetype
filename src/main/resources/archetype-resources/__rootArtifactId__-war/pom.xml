@@ -20,6 +20,21 @@
             <version>${appengine.target.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client-appengine</artifactId>
+            <version>${google-api-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.api-ads</groupId>
+            <artifactId>adwords-appengine</artifactId>
+            <version>${adwords-ads.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>${commons-configuration.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>${servlet-api.version}</version>
