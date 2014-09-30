@@ -5,6 +5,7 @@ This is a maven archetype creating an appengine project with the following featu
 
 - the spring framework (mvc with REST capabilities)
 - spring security with google login configured for authentication and enabled method and URL based authorization.
+- optional OAuth2 authorization for google service access.
 - using objectify as datastore access layer
 - the use of selenium tests by starting the devserver in the intergration phase and work with a remotely controlled firefox on it.
 - normal unit tests with gae service stubs initialized.
@@ -24,6 +25,7 @@ USAGE
 - go into the newly created project: ` cd <my-artifactId> `
 - build the new project (see requirements below in case of errors): ` mvn clean install ` 
 - run the local devserver: ` cd <my-artifactId>-war; mvn appengine:devserver `
+- to activate OAuth2 authorization, create credentials in the developer console and add them to /WEB-INF/config.properties. See comments there for more details.
 
 See the README.md file in the created project for details of the several features.
 
