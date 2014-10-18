@@ -1,4 +1,4 @@
-Project-Draft for a AngularJS App with a backend based on the Spring-Framework
+Project-Draft for an AngularJS App with a backend based on the Spring-Framework
 ==============================================================================
 
 This is a Google App Engine project, already configured to use:
