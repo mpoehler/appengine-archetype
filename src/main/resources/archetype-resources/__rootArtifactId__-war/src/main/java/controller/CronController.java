@@ -8,6 +8,7 @@ import ${package}.service.CronService;
 import ${package}.service.PersonService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public class CronController {
 	public void dailyreport() {
 		cronService.dailyreport();
 	}
+
+    @RequestMapping(value = "/updateHTMLSnapshots", method = RequestMethod.GET)
+    public void updateHTMLSnapshots(HttpServletRequest request) {
+        cronService.updateHTMLSnapshots(request.getRequestURL());
+    }
 
     public CronService getCronService() {
         return cronService;

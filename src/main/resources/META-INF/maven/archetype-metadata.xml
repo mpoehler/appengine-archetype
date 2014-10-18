@@ -24,6 +24,8 @@
           <directory>src/main/webapp</directory>
           <includes>
             <include>**/*.jsp</include>
+            <include>**/*.html</include>
+            <include>**/*.txt</include>
             <include>**/*.xml</include>
             <include>**/*.properties</include>
           </includes>

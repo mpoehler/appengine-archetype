@@ -1,0 +1,3 @@
+/,/imprint,2014-10-23,monthly,0.7
+/,/about,2014-10-23,monthly,0.7
+/,,2014-10-25,daily,1

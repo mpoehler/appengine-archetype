@@ -4,7 +4,7 @@
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="homeApp">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,18 +21,38 @@
     <![endif]-->
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>homepage</h1>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
         </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#!">Home</a></li>
+                <li><a href="/user">Login</a></li>
+                <li><a href="#!about">About</a></li>
+                <li><a href="#!imprint">Imprint</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            Go to <a href="/user/">User Section</a><br/>
-            Go to <a href="/admin/">Admin Section</a><br/>
-        </div>
-        <div class="col-md-6">
+</div>
+
+<!-- Begin page content -->
+<div class="container-fluid" ng-view>
+</div>
+
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <p class="text-muted">
+            Place footer content here
             <sec:authorize access="isAuthenticated()">
                 User (<sec:authentication property="principal.email" />) is authenticated
             </sec:authorize>
@@ -41,7 +61,7 @@
             </sec:authorize>
             <br/>
             <sec:authorize access="isAuthenticated()"><a href="<%=UserServiceFactory.getUserService().createLogoutURL("/")%>">Logout</a></sec:authorize>
-        </div>
+        </p>
     </div>
 </div>
 

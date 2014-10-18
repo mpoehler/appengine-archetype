@@ -20,6 +20,11 @@
         </property>
     </bean>
 
+    <!-- Services for ordinary servlets (not dispatcher servlet) must be definied here to be reachable -->
+    <bean id="pageListService" class="${package}.service.PageListServiceTxtFileImpl">
+        <property name="txtFile" value="/WEB-INF/pages.txt"/>
+    </bean>
+
     <bean id="ofyService" class="${package}.service.OfyService" init-method="init">
         <property name="classes">
             <set>
@@ -35,6 +40,7 @@
 
     <bean id="cronService" class="${package}.service.CronService">
         <property name="ofyService" ref="ofyService"/>
+        <property name="pageListService" ref="pageListService"/>
     </bean>
 
     <bean id="gaeEntryPoint" class="${package}.security.GoogleAccountsAuthenticationEntryPoint" />

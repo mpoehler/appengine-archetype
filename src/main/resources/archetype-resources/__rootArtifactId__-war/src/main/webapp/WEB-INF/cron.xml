@@ -9,4 +9,9 @@
         <schedule>every 2 minutes</schedule>
         <!-- schedule>every day 00:00</schedule -->
     </cron>
+    <cron>
+        <url>/rest/cron/updateHTMLSnapshots</url>
+        <description>Updates the Memcache for HTMLSnapshots</description>
+        <schedule>every day 18:00</schedule>
+    </cron>
 </cronentries>

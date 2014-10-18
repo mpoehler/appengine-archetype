@@ -8,7 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import static org.junit.Assert.assertEquals;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -20,14 +21,14 @@ public class SeleniumTest {
     @Test
     public void testPersonIsShownOnUserPage()
     {
-        //WebDriver driver = new HtmlUnitDriver();
-        WebDriver driver = new FirefoxDriver();
+        WebDriver driver = new ChromeDriver();
+
         driver.get("http://localhost:8080");
-        Assert.assertEquals("homepage", driver.getTitle());
+        assertEquals("homepage", driver.getTitle());
 
-        driver.findElement(By.linkText("User Section")).click();
+        driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("btn-login")).click();
-
+        assertEquals("user", driver.findElement(By.cssSelector("h1")).getText());
         driver.close();
     }
 }
