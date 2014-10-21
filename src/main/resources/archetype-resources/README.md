@@ -6,7 +6,7 @@ This is a Google App Engine project, already configured to use:
 - the spring framework (mvc with REST capabilities)
 - spring security with google login configured for authentication and enabled method and URL based authorization.
 - using objectify as datastore access layer
-- the use of selenium tests by starting the devserver in the intergration phase and work with a remotely controlled firefox on it.
+- the use of selenium tests by starting the devserver in the intergration phase and work with a remotely controlled chrome on it.
 - normal unit tests with gae service stubs initialized.
 - demo of a cron service
 - bower to load all js dependencies
@@ -19,7 +19,8 @@ The project requires the following external software to be present on your syste
 
 - maven version 3 or greater
 - npm - Node package manager (needed for bower and grunt)
-- firefox - the web browser (needed to run selenium tests)
+- chrome - the web browser (needed to run selenium tests)
+- chromedriver - needed to remote control chrome (https://code.google.com/p/selenium/wiki/ChromeDriver)
 
 Quickstart
 ==========
